@@ -4,12 +4,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
+// Definindo o tipo para posições
 type Position = { x: number; y: number };
 
 const CelebrationPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showFinal, setShowFinal] = useState(false);
-  const [positions, setPositions] = useState<Position[]>([]); // Tipo explícito para posições
+  const [positions, setPositions] = useState<Position[]>([]); // Define o tipo explicitamente
 
   const celebrationContent = [
     {
@@ -63,7 +64,7 @@ const CelebrationPage = () => {
   // Atualiza as posições ao mudar o índice
   useEffect(() => {
     const imagesCount = celebrationContent[currentIndex].images.length;
-    setPositions(generatePositions(imagesCount));
+    setPositions(generatePositions(imagesCount)); // Corrige o erro de tipo
   }, [currentIndex]);
 
   const imageVariants = {
