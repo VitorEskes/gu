@@ -19,7 +19,7 @@ const QuizPage = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const router = useRouter();
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (!questions[currentQuestion].canClickNo) {
       const noButton = document.getElementById('noButton');
       if (noButton) {

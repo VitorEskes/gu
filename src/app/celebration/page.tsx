@@ -10,7 +10,8 @@ type Position = { x: number; y: number };
 const CelebrationPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showFinal, setShowFinal] = useState(false);
-  const [positions, setPositions] = useState<Position[]>([]); // Define o tipo explicitamente
+  const [positions, setPositions] = useState<Position[]>([]); // Define o tipo explícito
+
 
   const celebrationContent = [
     {
