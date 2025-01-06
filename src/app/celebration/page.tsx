@@ -4,10 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
+type Position = { x: number; y: number };
+
 const CelebrationPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showFinal, setShowFinal] = useState(false);
-  const [positions, setPositions] = useState<{ x: number; y: number }[]>([]);
+  const [positions, setPositions] = useState<Position[]>([]); // Tipo explícito para posições
 
   const celebrationContent = [
     {
@@ -45,23 +47,23 @@ const CelebrationPage = () => {
     return () => clearInterval(interval);
   }, [currentIndex, showFinal]);
 
-  // Gera posições aleatórias no cliente
-  useEffect(() => {
-    const generateRandomPositions = () => {
-      if (typeof window !== "undefined") {
-        return celebrationContent[currentIndex].images.map(() => {
-          const maxWidth = window.innerWidth - 256; // Ajuste para o tamanho da imagem
-          const maxHeight = window.innerHeight - 256;
-          return {
-            x: Math.random() * maxWidth,
-            y: Math.random() * maxHeight,
-          };
-        });
-      }
-      return [];
-    };
+  // Gera posições aleatórias
+  const generatePositions = (count: number): Position[] => {
+    if (typeof window !== "undefined") {
+      const maxWidth = window.innerWidth - 256; // Ajuste para o tamanho da imagem
+      const maxHeight = window.innerHeight - 256;
+      return Array.from({ length: count }, () => ({
+        x: Math.random() * maxWidth,
+        y: Math.random() * maxHeight,
+      }));
+    }
+    return [];
+  };
 
-    setPositions(generateRandomPositions());
+  // Atualiza as posições ao mudar o índice
+  useEffect(() => {
+    const imagesCount = celebrationContent[currentIndex].images.length;
+    setPositions(generatePositions(imagesCount));
   }, [currentIndex]);
 
   const imageVariants = {
